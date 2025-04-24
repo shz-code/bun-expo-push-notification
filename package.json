@@ -1,0 +1,21 @@
+{
+  "name": "expo-push-server",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun --watch index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.3",
+    "expo-server-sdk": "^3.15.0",
+    "hono": "^4.7.7",
+    "zod": "^3.24.3"
+  }
+}
