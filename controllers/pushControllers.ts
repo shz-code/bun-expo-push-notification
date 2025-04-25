@@ -18,12 +18,12 @@ export const sendPushNotification = async (c: Context) => {
       body,
       priority: "high" as "default" | "high" | "normal",
       channelId: "default",
-      data
+      data: data || {},
     },
   ];
 
   try {
-    const ticketChunk = await expo.sendPushNotificationsAsync(messages);
+    const ticketChunk = await expo.sendPushNotificationsAsync(messages);    
     return c.json({ success: true, tickets: ticketChunk });
   } catch (error) {
     console.error("Error sending notification:", error);

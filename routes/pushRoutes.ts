@@ -1,13 +1,33 @@
-import { Hono } from "hono";
 import { sendPushNotification } from "../controllers/pushControllers";
-import { zValidator } from "@hono/zod-validator";
 import { sendPushNotificationDTO } from "../dtos/pushDTO/sendPushNotificationDTO";
+import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
 
-const pushRoutes = new Hono();
+const pushRoutes = new OpenAPIHono();
 
-pushRoutes.post(
-  "/send",
-  zValidator("json", sendPushNotificationDTO),
+pushRoutes.openapi(
+  createRoute({
+    method: "post",
+    path: "/send",
+    summary: "Send a push notification",
+    description:
+      "Send a push notification to a device using Expo Push Notifications.",
+    tags: ["Push Notifications"],
+    responses: {
+      200: {
+        description:
+          "Responds with the ticket chunk of the sent notification and status.",
+      },
+    },
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: sendPushNotificationDTO,
+          },
+        },
+      },
+    },
+  }),
   sendPushNotification
 );
 

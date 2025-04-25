@@ -1,10 +1,23 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import pushRoutes from "./routes/pushRoutes";
+import { swaggerUI } from '@hono/swagger-ui'
+import { OpenAPIHono } from "@hono/zod-openapi";
 
-const app = new Hono();
+const app = new OpenAPIHono();
 
 app.use("*", logger());
+
+// Use the middleware to serve Swagger UI at /ui
+app.get('/docs', swaggerUI({ url: '/doc' }))
+
+app.doc('doc', {
+  openapi: '3.0.0',
+  info: {
+    title: 'Expo Push Server',
+    version: '1.0.0',
+  },
+})
 
 app.get("/", (c) => c.text("Hello, World!"));
 
